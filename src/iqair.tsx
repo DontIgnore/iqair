@@ -115,42 +115,10 @@ ${!targetCity ? "Set a default city in extension preferences or pass a city, e.g
     data.countrySlug && data.countrySlug.length > 0
       ? data.countrySlug[0].toUpperCase() + data.countrySlug.slice(1)
       : data.countrySlug;
-  const getLevelStyle = (color: Color) => {
-    const styles = {
-      [Color.Green]: { bg: "#00E400", text: "#000000" },
-      [Color.Yellow]: { bg: "#FFFF00", text: "#000000" },
-      [Color.Orange]: { bg: "#FF7E00", text: "#FFFFFF" },
-      [Color.Red]: { bg: "#FF0000", text: "#FFFFFF" },
-      [Color.Purple]: { bg: "#8F3F97", text: "#FFFFFF" },
-    };
-    const style = styles[color as keyof typeof styles] || { bg: "#666666", text: "#FFFFFF" };
-    return `background-color: ${style.bg}; color: ${style.text}; padding: 4px 12px; border-radius: 6px; font-weight: bold; display: inline-block;`;
-  };
-
-  const levelStyle = getLevelStyle(levelColor);
-
-  // Add emoji for visual accent depending on level
-  const getLevelEmoji = (level: string) => {
-    const levelLower = level.toLowerCase();
-    if (levelLower.includes("good") || levelLower.includes("excellent")) {
-      return "✅ ";
-    } else if (levelLower.includes("moderate") || levelLower.includes("fair")) {
-      return "⚠️ ";
-    } else if (levelLower.includes("unhealthy for sensitive") || levelLower.includes("sensitive")) {
-      return "🔶 ";
-    } else if (levelLower.includes("unhealthy")) {
-      return "🔴 ";
-    } else if (levelLower.includes("very unhealthy") || levelLower.includes("hazardous")) {
-      return "🟣 ";
-    }
-    return "";
-  };
-
   const markdown = `# Air Quality: ${data.city}
 
 ## AQI: ${data.aqi}
 
-**Level:** <span style="${levelStyle}">${getLevelEmoji(data.level)}${data.level || "Unknown"}</span>
 
 ---
 
@@ -167,6 +135,10 @@ ${pollutantsTable}
         <Detail.Metadata>
           <Detail.Metadata.Label title="City" text={data.city} />
           <Detail.Metadata.Label title="Country" text={country} />
+          <Detail.Metadata.Separator />
+          <Detail.Metadata.TagList title="Level">
+            <Detail.Metadata.TagList.Item text={data.level || "Unknown"} color={levelColor} />
+          </Detail.Metadata.TagList>
           <Detail.Metadata.Separator />
           <Detail.Metadata.Label
             title="Main Pollutant"

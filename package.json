@@ -3,7 +3,7 @@
   "name": "iqair",
   "title": "Air Quality",
   "description": "Check air quality (AQI, PM2.5, PM10 and other pollutants) for cities worldwide using IQAir data.",
-  "icon": "extension-icon.png",
+  "icon": "assets/extension-icon.png",
   "license": "MIT",
   "preferences": [
     {

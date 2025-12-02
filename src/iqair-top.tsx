@@ -131,7 +131,7 @@ ${pollutantsTable}
 }
 
 export default function Command() {
-  const { isLoading, data, error, revalidate } = usePromise(async () => fetchIQAirTopCities(25), [], {
+  const { isLoading, data, error, revalidate } = usePromise(async () => fetchIQAirTopCities(10), [], {
     execute: true,
   });
 
